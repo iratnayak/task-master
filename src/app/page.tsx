@@ -1,63 +1,57 @@
-import Image from "next/image";
+import Sidebar from '@/components/Sidebar';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+    <div className="flex min-h-screen bg-slate-100">
+      {/* 1. Sidebar Section */}
+      <Sidebar />
+
+      {/* 2. Main Content Area (Board) */}
+      <main className="ml-64 flex-1 p-8">
+        <header className="mb-8 flex justify-between items-center">
+          <h2 className="text-3xl font-bold text-slate-800">Project Alpha</h2>
+          <button className="bg-orange-300 text-black px-4 py-2 rounded-lg hover:bg-orange-500 font-medium">
+            + New Task
+          </button>
+        </header>
+
+        {/* Board Columns Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Column 1: To Do */}
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+            <h3 className="font-semibold text-slate-700 mb-4 flex justify-between">
+              Next <span className="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full text-sm">3</span>
+            </h3>
+            {/* Sample Card */}
+            <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm cursor-pointer hover:border-blue-400">
+              <p className="text-sm font-medium text-slate-800">Design Homepage UI</p>
+              <span className="text-xs text-slate-400 mt-2 block">High Priority</span>
+            </div>
+          </div>
+
+          {/* Column 2: In Progress */}
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+            <h3 className="font-semibold text-blue-600 mb-4 flex justify-between">
+              In Progress <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-sm">1</span>
+            </h3>
+             {/* Sample Card */}
+             <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm">
+              <p className="text-sm font-medium text-slate-800">Setup Prisma Database</p>
+              <span className="text-xs text-slate-400 mt-2 block">Isuru R.</span>
+            </div>
+          </div>
+
+          {/* Column 3: Done */}
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+            <h3 className="font-semibold text-green-600 mb-4 flex justify-between">
+              Done <span className="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-sm">5</span>
+            </h3>
+             {/* Sample Card */}
+             <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm opacity-70">
+              <p className="text-sm font-medium text-slate-800">Initial Requirements</p>
+            </div>
+          </div>
         </div>
       </main>
     </div>
