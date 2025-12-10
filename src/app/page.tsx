@@ -1,57 +1,87 @@
 import Sidebar from '@/components/Sidebar';
+import { db } from '@/lib/db';
+import { createTask } from '@/actions/createTask';
+import { deleteTask } from '@/actions/deleteTask';
 
-export default function Home() {
+export default async function Home() {
+  // Data (Server Side Fetching)
+  const tasks = await db.task.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
   return (
     <div className="flex min-h-screen bg-slate-100">
-      {/* 1. Sidebar Section */}
       <Sidebar />
 
-      {/* 2. Main Content Area (Board) */}
       <main className="ml-64 flex-1 p-8">
         <header className="mb-8 flex justify-between items-center">
           <h2 className="text-3xl font-bold text-slate-800">Project Alpha</h2>
-          <button className="bg-orange-300 text-black px-4 py-2 rounded-lg hover:bg-orange-500 font-medium">
-            + New Task
-          </button>
+          
+          {/* 2. Server Action connected form */}
+          <form action={createTask} className="flex gap-2">
+          <input 
+              name="title" 
+              type="text" 
+              placeholder="Enter new task..." 
+              className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-amber-500 placeholder:text-gray-400"
+              required
+            />
+            <button type="submit" className="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-500 font-medium transition">
+              + Add Task
+            </button>
+          </form>
         </header>
 
         {/* Board Columns Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
-          {/* Column 1: To Do */}
+          {/* Column 1: NEXT */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <h3 className="font-semibold text-slate-700 mb-4 flex justify-between">
-              Next <span className="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full text-sm">3</span>
-            </h3>
-            {/* Sample Card */}
-            <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm cursor-pointer hover:border-blue-400">
-              <p className="text-sm font-medium text-slate-800">Design Homepage UI</p>
-              <span className="text-xs text-slate-400 mt-2 block">High Priority</span>
-            </div>
+            <h3 className="font-semibold text-slate-700 mb-4">To Do</h3>
+            
+            {/* 3. Data map */}
+            {tasks.filter(t => t.status === 'NEXT').map((task) => (
+              <div key={task.id} className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm hover:border-blue-300 transition group">
+                <div className="flex justify-between items-start">
+                <p className="text-sm font-medium text-slate-800">{task.title}</p>
+                {/* Delete Button From */}
+                <form action={deleteTask}>
+                 <input type='hidden' name='id' value={task.id}/>
+                 <button type="submit" className="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition text-xs font-bold px-2">
+                      X
+                 </button>
+                </form>
+                </div>
+                <span className="text-xs text-slate-400 mt-2 block">
+                  {task.createdAt.toLocaleDateString()}
+                </span>
+              </div>
+            ))}
+            
+            {/* Display in a massage when the tasks becoming empty */}
+            {tasks.filter(t => t.status === 'NEXT').length === 0 && (
+              <p className="text-xs text-slate-400 text-center py-4">No tasks yet</p>
+            )}
           </div>
 
-          {/* Column 2: In Progress */}
+          {/* Column 2: In Progress (Dummy UI for now) */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <h3 className="font-semibold text-blue-600 mb-4 flex justify-between">
-              In Progress <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-sm">1</span>
-            </h3>
-             {/* Sample Card */}
-             <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm">
-              <p className="text-sm font-medium text-slate-800">Setup Prisma Database</p>
-              <span className="text-xs text-slate-400 mt-2 block">Isuru R.</span>
-            </div>
+            <h3 className="font-semibold text-blue-600 mb-4">In Progress</h3>
+             <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm opacity-50">
+               <p className="text-sm font-medium text-slate-800">Database Schema Design</p>
+             </div>
+          </div>
+          
+          {/* Column 3: Done (Dummy UI for now) */}
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+            <h3 className="font-semibold text-green-600 mb-4">Done</h3>
+             <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm opacity-50">
+               <p className="text-sm font-medium text-slate-800 line-through">Initial Setup</p>
+             </div>
           </div>
 
-          {/* Column 3: Done */}
-          <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-            <h3 className="font-semibold text-green-600 mb-4 flex justify-between">
-              Done <span className="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-sm">5</span>
-            </h3>
-             {/* Sample Card */}
-             <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 shadow-sm opacity-70">
-              <p className="text-sm font-medium text-slate-800">Initial Requirements</p>
-            </div>
-          </div>
         </div>
       </main>
     </div>

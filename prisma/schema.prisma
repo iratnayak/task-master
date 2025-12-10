@@ -51,3 +51,11 @@ model Card {
 
   @@index([listId])
 }
+
+model Task {
+  id        String   @id @default(uuid())
+  title     String
+  status    String   @default("TODO") // TODO, IN_PROGRESS, DONE
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
