@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion';
-import { deleteTask } from '@/actions/deleteTask';
-import { updateTaskStatus } from '@/actions/updateTaskStatus';
-import test from 'node:test';
+import { motion } from "framer-motion";
+import { deleteTask } from "@/actions/deleteTask";
+import { updateTaskStatus } from "@/actions/updateTaskStatus";
+import test from "node:test";
 
 type TaskProps = {
-    task: {
-      id: string;
-      title: string;
-      status: string;
-      createdAt: Date;
-    };
+  task: {
+    id: string;
+    title: string;
+    status: string;
+    createdAt: Date;
   };
+};
 
 const TaskCard = ({ task }: TaskProps) => {
-    return(
+  return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 20 }}
@@ -23,20 +23,29 @@ const TaskCard = ({ task }: TaskProps) => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
       className={`p-3 rounded-lg border mb-3 shadow-sm group relative transition-all ${
-        task.status === 'DONE' 
-          ? 'bg-slate-50 border-slate-100 opacity-75' 
-          : 'bg-white border-slate-200 hover:border-blue-300'
+        task.status === "DONE"
+          ? "bg-slate-50 border-slate-100 opacity-75"
+          : "bg-white border-slate-200 hover:border-blue-300"
       }`}
     >
-        <div className="flex justify-between items-start">
-        <p className={`text-sm font-medium ${task.status === 'DONE' ? 'text-slate-500 line-through' : 'text-slate-800'}`}>
+      <div className="flex justify-between items-start">
+        <p
+          className={`text-sm font-medium ${
+            task.status === "DONE"
+              ? "text-slate-500 line-through"
+              : "text-slate-800"
+          }`}
+        >
           {task.title}
         </p>
 
         {/* Delete Button */}
         <form action={deleteTask}>
           <input type="hidden" name="id" value={task.id} />
-          <button type="submit" className="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition text-xs font-bold px-2">
+          <button
+            type="submit"
+            className="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition text-xs font-bold px-2"
+          >
             X
           </button>
         </form>
@@ -44,9 +53,8 @@ const TaskCard = ({ task }: TaskProps) => {
 
       {/* Buttons based on Status */}
       <div className="mt-3 flex justify-end">
-        
         {/* TODO -> IN_PROGRESS */}
-        {task.status === 'TODO' && (
+        {task.status === "TODO" && (
           <form action={updateTaskStatus}>
             <input type="hidden" name="id" value={task.id} />
             <input type="hidden" name="newStatus" value="IN_PROGRESS" />
@@ -57,7 +65,7 @@ const TaskCard = ({ task }: TaskProps) => {
         )}
 
         {/* IN_PROGRESS -> DONE */}
-        {task.status === 'IN_PROGRESS' && (
+        {task.status === "IN_PROGRESS" && (
           <form action={updateTaskStatus}>
             <input type="hidden" name="id" value={task.id} />
             <input type="hidden" name="newStatus" value="DONE" />
@@ -68,7 +76,7 @@ const TaskCard = ({ task }: TaskProps) => {
         )}
 
         {/* DONE Status Text */}
-        {task.status === 'DONE' && (
+        {task.status === "DONE" && (
           <span className="text-[10px] font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">
             Completed
           </span>
@@ -76,11 +84,10 @@ const TaskCard = ({ task }: TaskProps) => {
       </div>
 
       <span className="text-[10px] text-slate-400 mt-2 block">
-      {new Date(task.createdAt).toLocaleDateString('en-GB')}
+        {new Date(task.createdAt).toLocaleDateString("en-GB")}
       </span>
     </motion.div>
-
-    );
+  );
 };
 
 export default TaskCard;

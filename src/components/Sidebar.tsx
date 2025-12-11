@@ -1,5 +1,5 @@
-import React from 'react';
-import { LayoutDashboard, Settings, User, LogOut } from 'lucide-react';
+import React from "react";
+import { LayoutDashboard, Settings, User, LogOut } from "lucide-react";
 
 const Sidebar = () => {
   return (
@@ -11,15 +11,24 @@ const Sidebar = () => {
 
       {/* Navigation Links */}
       <nav className="flex-1 p-4 space-y-2">
-        <a href="#" className="flex items-center space-x-3 p-3 bg-slate-800 rounded-lg text-blue-400">
+        <a
+          href="#"
+          className="flex items-center space-x-3 p-3 bg-slate-800 rounded-lg text-blue-400"
+        >
           <LayoutDashboard size={20} />
           <span>Board</span>
         </a>
-        <a href="#" className="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-lg transition text-gray-300">
+        <a
+          href="#"
+          className="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-lg transition text-gray-300"
+        >
           <User size={20} />
           <span>My Tasks</span>
         </a>
-        <a href="#" className="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-lg transition text-gray-300">
+        <a
+          href="#"
+          className="flex items-center space-x-3 p-3 hover:bg-slate-800 rounded-lg transition text-gray-300"
+        >
           <Settings size={20} />
           <span>Settings</span>
         </a>
