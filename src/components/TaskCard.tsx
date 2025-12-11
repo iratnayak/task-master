@@ -25,7 +25,7 @@ const TaskCard = ({ task }: TaskProps) => {
       className={`p-3 rounded-lg border mb-3 shadow-sm group relative transition-all ${
         task.status === "DONE"
           ? "bg-slate-50 border-slate-100 opacity-75"
-          : "bg-white border-slate-200 hover:border-blue-300"
+          : "bg-white border-slate-200 hover:border-amber-500"
       }`}
     >
       <div className="flex justify-between items-start">

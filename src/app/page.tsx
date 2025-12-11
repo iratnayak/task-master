@@ -31,14 +31,14 @@ export default async function Home({ searchParams }: Props) {
 
       <main className="ml-64 flex-1 p-8">
         <header className="mb-8 flex justify-between items-center">
-          <h2 className="text-3xl font-bold text-slate-800">Project Alpha</h2>
+          <h2 className="text-3xl font-bold text-black">Project Alpha</h2>
 
           <form action={createTask} className="flex gap-2">
             <input
               name="title"
               type="text"
               placeholder="Enter new task..."
-              className="px-4 py-2 rounded-lg border border-slate-700 bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-500"
+              className="px-4 py-2 rounded-lg border border-slate-200 shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-500"
               required
             />
             <button
