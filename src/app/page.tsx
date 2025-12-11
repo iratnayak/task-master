@@ -1,11 +1,27 @@
 import Sidebar from "@/components/Sidebar";
 import KanbanBoard from "@/components/KanbanBoard";
+import SearchBar from "@/components/SearchBar";
 import { db } from "@/lib/db";
 import { createTask } from "@/actions/createTask";
 
-export default async function Home() {
-  // Database eken data gannawa
+// Define the type for URL search parameters (Async in Next.js 15/16)
+type Props = {
+  searchParams: Promise<{ query?: string }>;
+};
+
+export default async function Home({ searchParams }: Props) {
+  // 1. Get the search query from the URL (Must await)
+  const params = await searchParams;
+  const query = params.query || "";
+
+  // 2. Filter tasks from the database based on the search query
   const tasks = await db.task.findMany({
+    where: {
+      title: {
+        contains: query, // Check if title contains the search term
+        // mode: 'insensitive', // Optional: Ignore case sensitivity
+      },
+    },
     orderBy: { createdAt: "desc" },
   });
 
@@ -33,6 +49,11 @@ export default async function Home() {
             </button>
           </form>
         </header>
+
+        {/* Search Bar Component */}
+        <SearchBar />
+
+        {/* Pass filtered tasks to the Kanban Board */}
         <KanbanBoard initialTasks={tasks} />
       </main>
     </div>
